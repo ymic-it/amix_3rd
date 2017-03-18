@@ -1,0 +1,30 @@
+# nginx-proxy
+proxy:
+  image: jwilder/nginx-proxy
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    # コンテナイベントの取得のためにdocker.sockをro[Read Only]でマウント
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+  restart: always
+
+db_api:
+  build: ./docker/flask
+  ports:
+     - "8080:8080"
+#  volumes:
+#  - ./src/db_api/:/root/
+  #- ./src/db_api/:/web/hello/
+#  environment:
+#    VIRTUAL_HOST: api.*
+
+mysql:
+  build: ./docker/mysql
+  ports:
+      - "3306:3306"
+  environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+  volumes:
+    - ./volumes/mysql:/var/log/mysql
