@@ -1,0 +1,3 @@
+[submodule "Docker/mysql/amix_3rd_quesrionData"]
+	path = Docker/mysql/amix_3rd_quesrionData
+	url = https://github.com/Godan/amix_3rd_quesrionData.git
