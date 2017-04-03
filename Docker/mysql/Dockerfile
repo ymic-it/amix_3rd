@@ -9,6 +9,8 @@ RUN { \
   echo 'default-character-set = utf8mb4'; \
 } > /etc/mysql/conf.d/charset.cnf
 
+COPY amix_3rd_quesrionData/dump.sql /docker-entrypoint-initdb.d/dump.sql
+
 RUN apt-get update && apt-get install -y nano locales \
   --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
