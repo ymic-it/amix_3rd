@@ -5,6 +5,7 @@ from redis import Redis
 import dbManager as db
 from pprint import pprint
 import json
+import random
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -29,6 +30,11 @@ def get_size(genreId,sourceNo):
 @app.route('/question/list/<genreId>/<sourceNo>')
 def get_lists(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "list": db.getList(genreId, sourceNo)}
+    return str(json.dumps(returnDic))
+
+@app.route('/question/rand/<genreId>/<sourceNo>')
+def get_rand(genreId,sourceNo):
+    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
     return str(json.dumps(returnDic))
 
 if __name__ == "__main__":
