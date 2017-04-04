@@ -44,9 +44,27 @@ def getSize(genreId=0, sourceNo=0):
     if(where != ""):
         where = "where " + where
 
-    aaaa = "SELECT count(id) as count FROM questions " + where + " Limit 1"
     resultArray = runQuery("SELECT count(id) as count FROM questions " + where + " Limit 1")
     for row in resultArray:
         count = row["count"]
 
     return  count
+
+
+def getList(genreId=0, sourceNo=0, parms = "*"):
+    where = ""
+    #count = "null"
+    if(int(genreId) != 0):
+        where = "genre = "+genreId
+
+    if(int(sourceNo) != 0):
+        if(where != ""):
+            where = where + " and "
+        where =  where + "sourceNo = "+ sourceNo
+
+    if(where != ""):
+        where = "where " + where
+
+    resultArray = runQuery("SELECT " + parms + " FROM questions " + where)
+
+    return  resultArray
