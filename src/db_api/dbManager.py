@@ -68,3 +68,12 @@ def getList(genreId=0, sourceNo=0, parms = "*"):
     resultArray = runQuery("SELECT " + parms + " FROM questions " + where)
 
     return  resultArray
+
+
+def getSourceList():
+    resultArray = []
+    result = runQuery("SELECT DISTINCT sourceNo  FROM question.questions ")
+    for row in result:
+        resultArray.append(row["sourceNo"])
+
+    return  resultArray

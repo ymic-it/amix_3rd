@@ -27,15 +27,30 @@ def get_size(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
     return str(json.dumps(returnDic))
 
+# 問題リストを返す
 @app.route('/question/list/<genreId>/<sourceNo>')
 def get_lists(genreId,sourceNo):
-    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "list": db.getList(genreId, sourceNo)}
+    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
     return str(json.dumps(returnDic))
 
+# 問題を一つランダムに返す
 @app.route('/question/rand/<genreId>/<sourceNo>')
 def get_rand(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
     return str(json.dumps(returnDic))
+
+# 問題をジャンルリストを返す
+@app.route('/genre/list')
+def get_genre():
+    returnDic = {"main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
+    return str(json.dumps(returnDic))
+
+# 問題を出典元リストを返す
+@app.route('/source/list')
+def get_source():
+    returnDic = {"main":db.getSourceList()}
+    return str(json.dumps(returnDic))
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
