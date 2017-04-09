@@ -19,7 +19,7 @@ services:
       - /var/lib/mysql
 
   db_api:
-      build: ./docker/flask
+      build: ./Docker/flask
       # ports:
       #  - "5000:5000"
       volumes:
@@ -37,7 +37,17 @@ services:
   redis:
     image: redis
 
-
+  app:
+    build: ./Docker/php
+    volumes:
+     - ./src/php/:/var/www/html
+    expose:
+      - "80"
+    links:
+      - mysql
+    environment:
+      VIRTUAL_HOST: app.localhost
+      VIRTUAL_PORT: 80
 
   mysql:
     build: ./docker/mysql
@@ -54,22 +64,7 @@ services:
     ports:
       - "3306"
 
-
   web:
     image: httpd:2.4
     environment:
       VIRTUAL_HOST: localhost.com, www.*, ec-supli.com
-  # volumes_from:
-  #   - data
-
-# application:
-#   container_name: python-flask-app
-#   build: ./Docker/flask
-#   # image: pythonbottle_application
-#   tty: false
-#   volumes_from:
-#     - data
-#   ports:
-#     - "5000:5000"
-#   links:
-#     - mysql:python-flask-db
