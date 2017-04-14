@@ -37,18 +37,6 @@ services:
   redis:
     image: redis
 
-  app:
-    build: ./Docker/php
-    volumes:
-     - ./src/php/:/var/www/html
-    expose:
-      - "80"
-    links:
-      - mysql
-    environment:
-      VIRTUAL_HOST: app.localhost
-      VIRTUAL_PORT: 80
-
   mysql:
     build: ./docker/mysql
     volumes_from:
@@ -63,6 +51,18 @@ services:
     #   - "3306"
     ports:
       - "3306"
+
+  node_express:
+    image: node:6.9-alpine
+    volumes:
+      - "./src/www/:/src"
+    working_dir: /src
+    command: [sh, -c, npm install && npm start dev]
+    expose:
+      - "80"
+    environment:
+      VIRTUAL_HOST: app.localhost
+      VIRTUAL_PORT: 80
 
   web:
     image: httpd:2.4
