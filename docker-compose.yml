@@ -3,7 +3,7 @@ services:
 
   # nginx-proxy
   proxy:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:latest
     ports:
       - "80:80"
       - "443:443"
