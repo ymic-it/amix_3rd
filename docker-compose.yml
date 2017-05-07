@@ -3,7 +3,7 @@ services:
 
   # nginx-proxy
   proxy:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:latest
     ports:
       - "80:80"
       - "443:443"
@@ -19,7 +19,7 @@ services:
       - /var/lib/mysql
 
   db_api:
-      build: ./docker/flask
+      build: ./Docker/flask
       # ports:
       #  - "5000:5000"
       volumes:
@@ -37,8 +37,6 @@ services:
   redis:
     image: redis
 
-
-
   mysql:
     build: ./docker/mysql
     volumes_from:
@@ -54,22 +52,19 @@ services:
     ports:
       - "3306"
 
+  node_express:
+    image: node:6.9-alpine
+    volumes:
+      - "./src/www/:/src"
+    working_dir: /src
+    command: [sh, -c, npm install && npm start dev]
+    expose:
+      - "80"
+    environment:
+      VIRTUAL_HOST: app.localhost
+      VIRTUAL_PORT: 80
 
   web:
     image: httpd:2.4
     environment:
       VIRTUAL_HOST: localhost.com, www.*, ec-supli.com
-  # volumes_from:
-  #   - data
-
-# application:
-#   container_name: python-flask-app
-#   build: ./Docker/flask
-#   # image: pythonbottle_application
-#   tty: false
-#   volumes_from:
-#     - data
-#   ports:
-#     - "5000:5000"
-#   links:
-#     - mysql:python-flask-db

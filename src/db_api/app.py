@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-from flask import Flask
+from flask import Flask,make_response
 from redis import Redis
 import dbManager as db
 from pprint import pprint
@@ -37,6 +37,14 @@ def get_lists(genreId,sourceNo):
 @app.route('/question/rand/<genreId>/<sourceNo>')
 def get_rand(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
+# 問題を一つランダムに返す
+@app.route('/question/rand/')
+def get_all_rand():
+    returnDic = {"genreId":"all", "sourceNo":"all", "main": random.choice(db.getList())}
     return str(json.dumps(returnDic))
 
 # 問題をジャンルリストを返す
