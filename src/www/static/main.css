@@ -105,3 +105,29 @@
   visibility: visible;
   opacity: 1;
 }
+
+.demo-card-wide.mdl-card {
+  width: 90vw;
+  max-width: 100%;
+  height: 70vw;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176dpx;
+  background: url('/static/top.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+    font-size: medium;
+}
+
+.demo-card-wide > .mdl-card__supporting-text {
+  font-size: 52px;
+  height: 50%;
+}
+
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
