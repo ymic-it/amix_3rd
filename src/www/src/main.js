@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import modal from './components/modal'
 import questionView from './components/questionView'
+import 'babel-polyfill'
+
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
