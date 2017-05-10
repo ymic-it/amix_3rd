@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import modal from './components/modal'
 import questionView from './components/questionView'
-import 'babel-polyfill'
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -11,7 +10,7 @@ Vue.use(VueRouter)
 
 const store = new Vuex.Store({
   state: {
-    question: null,
+    question: {main: {text: ''}},
     showModal: false,
     result: false
   },
@@ -28,7 +27,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     increment (state, payload) {
-      fetch('http://amix.api.ymic-it.com/question/rand/0/0')
+      fetch('http://amix.api.localhost/question/rand/0/0')
           .then(res => res.json()).then(res => (
             state.question = res))
     },
