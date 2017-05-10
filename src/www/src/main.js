@@ -5,7 +5,6 @@ import modal from './components/modal'
 import questionView from './components/questionView'
 import 'babel-polyfill'
 
-
 Vue.use(Vuex)
 Vue.use(VueRouter)
 // Counter コンポーネントをつくってみましょう
