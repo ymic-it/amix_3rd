@@ -38,7 +38,7 @@ services:
     image: redis
 
   mysql:
-    build: ./docker/mysql
+    build: ./Docker/mysql
     volumes_from:
       - db_data
     environment:

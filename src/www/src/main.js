@@ -27,7 +27,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     increment (state, payload) {
-      fetch('http://amix.api.localhost/question/rand/0/0')
+      fetch('http://amix.api.ymic-it.com/question/rand/0/0')
           .then(res => res.json()).then(res => (
             state.question = res))
     },
