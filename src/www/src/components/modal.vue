@@ -8,19 +8,23 @@
 
             <div class="body">
             <h3>問題</h3>
-            <div id=app>{{$store.getters.question.main.text}}</div>
+            <div class="modal-text" id=app>{{$store.getters.question.main.text}}</div>
             <h3>解説</h3>
+            <div class="modal-text">
             {{$store.getters.question.main.commentary}}
+            </div>
 
           </div>
     <div class="modal-footer">
         問題番号: {{$store.getters.question.main.id}}
         問題ジャンル: {{$store.getters.question.main.genre}}
         問題出題年: {{$store.getters.question.main.sourceNo}}
-        <button class="modal-default-button" @click="$store.commit('changeModal'),$store.commit('increment')">
-          次へ
-        </button>
     </div>
+    <div class="container bt-center">
+    <button class="bt-center mdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" @click="$store.commit('changeModal'),$store.commit('increment')">次へ</button>
+    </div>
+
+
   </div>
 
   <div class="bg" v-bind:class="{show: $store.getters.modalState}" v-on:click="$store.commit('changeModal'),$store.commit('increment')"></div>
@@ -42,5 +46,17 @@ export default{
 }
 i {
   padding-right: 16px
+}
+
+.bt-center {
+    text-align:center;
+    font-size: 1.4em;
+    width: 70%;
+
+}
+
+.modal-text{
+line-height: 1.5;
+font-size: 40px;
 }
 </style>
