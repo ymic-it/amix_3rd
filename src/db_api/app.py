@@ -51,14 +51,17 @@ def get_all_rand():
 @app.route('/genre/list')
 def get_genre():
     returnDic = {"main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
-    return str(json.dumps(returnDic))
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 # 問題を出典元リストを返す
 @app.route('/source/list')
 def get_source():
     returnDic = {"main":db.getSourceList()}
-    return str(json.dumps(returnDic))
-
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
