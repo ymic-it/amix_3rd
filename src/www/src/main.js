@@ -50,15 +50,14 @@ const store = new Vuex.Store({
       var url = 'http://amix.api.ymic-it.com/question/rand/a?/b?'
       var selectGenreOption = state.questionSelect.genre
       var selectSourceOption = state.questionSelect.source
-      if (selectGenreOption == null) {
+      if (selectGenreOption == null || selectGenreOption === undefined) {
         selectGenreOption = [0]
       }
-      if (selectSourceOption == null) {
+      if (selectSourceOption == null || selectSourceOption === undefined) {
         selectSourceOption = [0]
       }
       url = url.replace('a?', randAry(selectGenreOption))
       url = url.replace('b?', randAry(selectSourceOption))
-      console.log(url)
       fetch(url)
           .then(res => res.json()).then(res => (
             state.question = res))
