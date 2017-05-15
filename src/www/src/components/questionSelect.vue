@@ -1,4 +1,5 @@
 <template>
+<div class="col-xs-12">
 <div class="row">
 <div class="col-xs-6">
 <h6>問題ジャンル選択</h6>
@@ -34,6 +35,14 @@
   </tbody>
 </table>
 </div>
+</div>
+
+<div class="container bt-center">
+ <router-link class="mdl-navigation__link" to="/main">
+<button class="bt-center mdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" > 始める</button>
+</router-link>
+</div>
+
 </div>
 </template>
 <script>
@@ -73,5 +82,12 @@ export default{
 .active{
   background: #3ed37d;
   color: #fff;
+}
+
+.bt-center {
+    text-align:center;
+    font-size: 1.4em;
+    width: 70%;
+
 }
 </style>

@@ -25,13 +25,17 @@ def get_test():
 @app.route('/question/size/<genreId>/<sourceNo>')
 def get_size(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
-    return str(json.dumps(returnDic))
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 # 問題リストを返す
 @app.route('/question/list/<genreId>/<sourceNo>')
 def get_lists(genreId,sourceNo):
     returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
-    return str(json.dumps(returnDic))
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 # 問題を一つランダムに返す
 @app.route('/question/rand/<genreId>/<sourceNo>')
