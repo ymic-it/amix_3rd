@@ -2,8 +2,12 @@
 <div>
     <div class="modal" v-bind:class="{show: $store.getters.modalState}">
     <div class="modal-header">
-    <h3 v-show="$store.getters.result == true">正解</h3>
-    <h3 v-show="$store.getters.result == false">不正解</h3>
+    <div v-if="Boolean($store.getters.result)">
+    <h3>正解</h3>
+    </div>
+    <div v-else>
+    <h3>不正解</h3>
+    </div>
   </div>
 
             <div class="body">
