@@ -54,7 +54,7 @@ const store = new Vuex.Store({
         selectGenreOption = [0]
       }
       if (selectSourceOption == null) {
-        selectOption = [0]
+        selectSourceOption = [0]
       }
       url = url.replace('a?', randAry(selectGenreOption))
       url = url.replace('b?', randAry(selectSourceOption))
