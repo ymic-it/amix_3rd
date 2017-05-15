@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import modal from './components/modal'
+import questionSelect from './components/questionSelect'
 import questionView from './components/questionView'
 import 'babel-polyfill'
 
@@ -13,7 +14,10 @@ const store = new Vuex.Store({
   state: {
     question: {main: {text: ''}},
     showModal: false,
-    result: false
+    result: false,
+    questionSelect: {genre: null, source: null},
+    questionList: {},
+    isActive: false
   },
   getters: {
     modalState: state => {
@@ -24,11 +28,33 @@ const store = new Vuex.Store({
     },
     result: state => {
       return state.result
+    },
+    questionSelect: state => {
+      console.log(state.questionSelect)
+      if (state.questionSelect == null) {
+        var array = {genre: [-1], source: [-1]}
+        return array
+      }
+      return state.questionSelect
+    },
+    questionList: state => {
+      return state.questionList
     }
   },
   mutations: {
     increment (state, payload) {
-      fetch('http://amix.api.ymic-it.com/question/rand/0/0')
+      var url = 'http://amix.api.ymic-it.com/question/rand/a?/b?'
+      var selectOption = state.questionSelect.genre
+      if (selectOption == null) {
+        selectOption = [0]
+      }
+      if (selectOption == null) {
+        selectOption = [0]
+      }
+      url = url.replace('a?', randAry(selectOption))
+      url = url.replace('b?', randAry(selectOption))
+      console.log(url)
+      fetch(url)
           .then(res => res.json()).then(res => (
             state.question = res))
     },
@@ -39,6 +65,21 @@ const store = new Vuex.Store({
         state.result = false
       }
       state.showModal = !state.showModal
+    },
+    getGenre (state) {
+      fetch('http://amix.api.ymic-it.com/genre/list').then(res => res.json()).then(res => (
+            state.questionList = res)).then(console.log(state.questionList))
+    },
+    selectGenre (state, id) {
+      if (state.questionSelect.genre == null) {
+        state.questionSelect.genre = []
+      }
+      if (state.questionSelect.genre.indexOf(id) === -1) {
+        state.questionSelect.genre.push(id)
+      } else {
+        state.questionSelect.genre = state.questionSelect.genre.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
+      }
+      console.log(state.questionSelect.genre)
     }
   },
   actions: {
@@ -47,6 +88,9 @@ const store = new Vuex.Store({
     },
     changeModal (context) {
       context.commit('changeModal')
+    },
+    selectGenre (context) {
+      context.commit('selectGenre')
     }
   }
 })
@@ -58,6 +102,16 @@ var main = Vue.component('app', {
     <div class="app">
     <questionView></questionView>
     <modal></modal>
+    </div>
+  `
+})
+
+var select = Vue.component('app', {
+  store,
+  components: { questionSelect },
+  template: `
+    <div class="app">
+    <questionSelect></questionSelect>
     </div>
   `
 })
@@ -88,6 +142,7 @@ const Bar = { template: '<div>bar</div>' }
 // ネストされたルートに関しては後で説明します
 const routes = [
   { path: '/main', component: main },
+  { path: '/select', component: select },
   { path: '/bar', component: Bar }
 ]
 
@@ -106,4 +161,12 @@ var app = new Vue({
 }).$mount('#app')
 
 window.app = app
+console.log(store.state.questionList.main)
+function randAry (array) {
+  var aryKeys = Object.keys(array)
+  var index = aryKeys[Math.floor(Math.random() * aryKeys.length)]
+  return array[index]
+}
+store.commit('getGenre')
+
 store.commit('increment')

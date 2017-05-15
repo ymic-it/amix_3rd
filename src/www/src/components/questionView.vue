@@ -2,7 +2,7 @@
 <div>
 <h2>Question:</h2>
 <h3>{{ getQuestion.main.text }}</h3>
-<div class="row">
+<div class="row" >
   <div class="col-xs-6" @click="$store.commit('changeModal', 'true')"><img  class="img-responsive" src="/static/T.png"></div>
   <div class="col-xs-6" @click="$store.commit('changeModal', 'false')"><img src="/static/F.png"></div>
 </div>
