@@ -48,15 +48,16 @@ const store = new Vuex.Store({
   mutations: {
     increment (state, payload) {
       var url = 'http://amix.api.ymic-it.com/question/rand/a?/b?'
-      var selectOption = state.questionSelect.genre
-      if (selectOption == null) {
+      var selectGenreOption = state.questionSelect.genre
+      var selectSourceOption = state.questionSelect.source
+      if (selectGenreOption == null) {
+        selectGenreOption = [0]
+      }
+      if (selectSourceOption == null) {
         selectOption = [0]
       }
-      if (selectOption == null) {
-        selectOption = [0]
-      }
-      url = url.replace('a?', randAry(selectOption))
-      url = url.replace('b?', randAry(selectOption))
+      url = url.replace('a?', randAry(selectGenreOption))
+      url = url.replace('b?', randAry(selectSourceOption))
       console.log(url)
       fetch(url)
           .then(res => res.json()).then(res => (
