@@ -84,6 +84,7 @@ const store = new Vuex.Store({
         state.questionSelect.genre = state.questionSelect.genre.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
       console.log(state.questionSelect.genre)
+      store.commit('increment')
     },
     selectSource (state, id) {
       if (state.questionSelect.source == null) {
@@ -95,10 +96,21 @@ const store = new Vuex.Store({
         state.questionSelect.source = state.questionSelect.source.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
       console.log(state.questionSelect.source)
+      store.commit('increment')
     },
     getSource (state) {
       fetch('http://amix.api.ymic-it.com/source/list').then(res => res.json()).then(res => (
             state.sourceList = res))
+    },
+    allGenreSelect (state) {
+      state.questionSelect.genre = ['1', '2', '3']
+    },
+    allSourceSelect (state) {
+      console.log(state.sourceList.main)
+      state.questionSelect.source = state.sourceList.main
+    },
+    clearSelect (state) {
+      state.questionSelect = {genre: [0], source: [0]}
     }
   },
   actions: {
@@ -113,6 +125,10 @@ const store = new Vuex.Store({
     },
     selectSource (context) {
       context.commit('selectSource')
+    },
+    allSelect (context) {
+      context.commit('allSourceSelect')
+      context.commit('allGenreSelect')
     }
   }
 })
