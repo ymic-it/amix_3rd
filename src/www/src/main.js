@@ -17,7 +17,8 @@ const store = new Vuex.Store({
     result: false,
     questionSelect: {genre: null, source: null},
     questionList: {},
-    isActive: false
+    isActive: false,
+    sourceList: []
   },
   getters: {
     modalState: state => {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
     },
     questionList: state => {
       return state.questionList
+    },
+    sourceList: state => {
+      return state.sourceList
     }
   },
   mutations: {
@@ -68,7 +72,7 @@ const store = new Vuex.Store({
     },
     getGenre (state) {
       fetch('http://amix.api.ymic-it.com/genre/list').then(res => res.json()).then(res => (
-            state.questionList = res)).then(console.log(state.questionList))
+            state.questionList = res))
     },
     selectGenre (state, id) {
       if (state.questionSelect.genre == null) {
@@ -80,6 +84,21 @@ const store = new Vuex.Store({
         state.questionSelect.genre = state.questionSelect.genre.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
       console.log(state.questionSelect.genre)
+    },
+    selectSource (state, id) {
+      if (state.questionSelect.source == null) {
+        state.questionSelect.source = []
+      }
+      if (state.questionSelect.source.indexOf(id) === -1) {
+        state.questionSelect.source.push(id)
+      } else {
+        state.questionSelect.source = state.questionSelect.source.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
+      }
+      console.log(state.questionSelect.source)
+    },
+    getSource (state) {
+      fetch('http://amix.api.ymic-it.com/source/list').then(res => res.json()).then(res => (
+            state.sourceList = res))
     }
   },
   actions: {
@@ -91,6 +110,9 @@ const store = new Vuex.Store({
     },
     selectGenre (context) {
       context.commit('selectGenre')
+    },
+    selectSource (context) {
+      context.commit('selectSource')
     }
   }
 })
@@ -168,5 +190,6 @@ function randAry (array) {
   return array[index]
 }
 store.commit('getGenre')
+store.commit('getSource')
 
 store.commit('increment')
