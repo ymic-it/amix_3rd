@@ -58,6 +58,7 @@ i {
     text-align:center;
     font-size: 1.4em;
     width: 70%;
+    height: 35%
 
 }
 
