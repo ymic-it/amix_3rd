@@ -72,7 +72,7 @@ def getList(genreId=0, sourceNo=0, parms = "*"):
 
 def getSourceList():
     resultArray = []
-    result = runQuery("SELECT DISTINCT sourceNo  FROM question.questions ")
+    result = runQuery("SELECT DISTINCT sourceNo  FROM question.questions ORDER BY sourceNo")
     for row in result:
         resultArray.append(row["sourceNo"])
 
