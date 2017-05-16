@@ -2,15 +2,17 @@
 <div>
     <div class="modal" v-bind:class="{show: $store.getters.modalState}">
     <div class="modal-header">
-    <div v-if="Boolean($store.getters.result)">
-    <h3>正解</h3>
-    </div>
-    <div v-else>
-    <h3>不正解</h3>
-    </div>
+      <h3>回答</h3>
   </div>
 
             <div class="body">
+              <div v-if="Boolean($store.getters.result)">
+              <img class="img-responsive" src="/static/t-msg.png" />
+              </div>
+              <div v-else>
+              <img class="img-responsive" src="/static/f-msg.png" />
+              </div>
+
             <h3>問題</h3>
             <div class="modal-text" id=app>{{$store.getters.question.main.text}}</div>
             <h3>解説</h3>
@@ -62,5 +64,12 @@ i {
 .modal-text{
 line-height: 1.5;
 font-size: 40px;
+}
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 30%;
+  text-align:center;
+  margin: auto;
 }
 </style>

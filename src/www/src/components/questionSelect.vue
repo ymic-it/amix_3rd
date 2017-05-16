@@ -31,13 +31,13 @@
   <thead>
     <tr>
       <th class="mdl-data-table__cell--non-numeric">ID</th>
-      <th>ジャンル</th>
+      <th>出題年代</th>
     </tr>
   </thead>
   <tbody>
     <tr v-for="sourceNo in sourceList.main"  @click="$store.commit('selectSource', sourceNo)"  v-bind:class="{ active: getSource.indexOf(sourceNo) >= 0}">
       <td class="mdl-data-table__cell--non-numeric">{{ sourceNo }}</td>
-      <td class="mdl-data-table__cell--non-numeric">第{{ sourceNo }}回</td>
+      <td class="mdl-data-table__cell--non-numeric">第 {{ sourceNo }} 回</td>
     </tr>
   </tbody>
 </table>
