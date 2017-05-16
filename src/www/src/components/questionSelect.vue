@@ -48,6 +48,7 @@
  <router-link class="mdl-navigation__link" to="/main">
 <button class="bt-center mdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" > 始める</button>
 </router-link>
+<br><br><br>
 </div>
 
 </div>
