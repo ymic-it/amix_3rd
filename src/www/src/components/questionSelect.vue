@@ -93,7 +93,7 @@ export default{
 
 .bt-center {
     text-align:center;
-    font-size: 1.4em;
+    font-size: 2em;
     width: 70%;
 
 }
