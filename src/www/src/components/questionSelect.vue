@@ -5,8 +5,8 @@
 <br>
 <br>
 <br>
-<button class="select-bt cmdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" @click="$store.commit('allGenreSelect'), $store.commit('allSourceSelect')" > 全選択</button>
-<button class="select-bt cmdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" @click="$store.commit('clearSelect')" > 解除</button>
+  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('allGenreSelect'), $store.commit('allSourceSelect')" > 全選択</button></div>
+<br>  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('clearSelect')" > 解除</button></div>
 </div>
 <div class="col-md-5">
 <h6>問題ジャンル選択</h6>
@@ -98,7 +98,9 @@ export default{
 
 }
 .select-bt {
+  text-align:center;
   width: 70%;
+  font-size: 2em;
 }
 
 .table-size{
@@ -108,6 +110,7 @@ export default{
 table {
 width: 70%;
 height: 70%;
+font-size: 2em
 }
 
 td {
