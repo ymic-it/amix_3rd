@@ -10,7 +10,7 @@
 </div>
 <div class="col-md-5">
 <h6>問題ジャンル選択</h6>
-<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+<table width="70%" class=" table-size mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
   <thead>
     <tr>
       <th class="mdl-data-table__cell--non-numeric">ID</th>
@@ -27,7 +27,7 @@
 </div>
 <div class="col-md-5">
 <h6>問題出題年次選択</h6>
-<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+<table class="table-size mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
   <thead>
     <tr>
       <th class="mdl-data-table__cell--non-numeric">ID</th>
@@ -100,4 +100,18 @@ export default{
 .select-bt {
   width: 70%;
 }
+
+.table-size{
+ width: 400px;
+}
+
+table {
+width: 70%;
+height: 70%;
+}
+
+td {
+  height: 85px;
+}
+
 </style>
