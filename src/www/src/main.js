@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     questionSelect: {genre: null, source: null},
     questionList: {},
     isActive: false,
-    sourceList: []
+    sourceList: [],
+    answer: false
   },
   getters: {
     modalState: state => {
@@ -43,6 +44,10 @@ const store = new Vuex.Store({
     },
     sourceList: state => {
       return state.sourceList
+    },
+    answer: state => {
+      console.log('getters:' + state.answer)
+      return state.answer
     }
   },
   mutations: {
@@ -111,6 +116,9 @@ const store = new Vuex.Store({
     },
     clearSelect (state) {
       state.questionSelect = {genre: [0], source: [0]}
+    },
+    setAnswer (state, answer) {
+      state.answer = answer
     }
   },
   actions: {

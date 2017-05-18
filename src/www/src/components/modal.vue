@@ -13,6 +13,15 @@
               <img class="img-responsive" src="/static/f-msg.png" />
               </div>
 
+              <div v-if="! Boolean($store.getters.result)" >
+                <div class="text-center" v-if="$store.getters.answer">
+                    <p>あなたの正答は<img class="one-line img-responsive-answer" src="/static/T.png" />でした</p>
+                </div>
+                <div class="text-center" v-else>
+                  <p>あなたの正答は<img class="one-line img-responsive-answer" src="/static/F.png" />でした</P>
+                </div>
+            </div>
+
             <h3>問題</h3>
             <div class="modal-text" id=app>{{$store.getters.question.main.text}}</div>
             <h3>解説</h3>
@@ -42,6 +51,10 @@ export default{
   computed: {
     count () {
       return this.$store.getters.question
+    },
+    getAnswer () {
+      console.log(this.$store.state.answer)
+      return this.$store.state.answer
     }
   }
 }
@@ -69,8 +82,19 @@ font-size: 40px;
 .img-responsive {
   display: block;
   height: auto;
+  max-width: 15%;
+  text-align:center;
+  margin: auto;
+}
+.img-responsive-answer {
+  display: block;
+  height: 30px;
   max-width: 30%;
   text-align:center;
   margin: auto;
+}
+.one-line {
+  vertical-align: middle;
+  display: inline;
 }
 </style>
