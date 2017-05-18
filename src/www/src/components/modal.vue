@@ -82,7 +82,7 @@ font-size: 40px;
 .img-responsive {
   display: block;
   height: auto;
-  max-width: 15%;
+  max-width: 3o%;
   text-align:center;
   margin: auto;
 }
