@@ -19,7 +19,8 @@ const store = new Vuex.Store({
     questionList: {},
     isActive: false,
     sourceList: [],
-    answer: false
+    answer: false,
+    now: 'index'
   },
   getters: {
     modalState: state => {
@@ -46,8 +47,10 @@ const store = new Vuex.Store({
       return state.sourceList
     },
     answer: state => {
-      console.log('getters:' + state.answer)
       return state.answer
+    },
+    getNow: state => {
+      return state.now
     }
   },
   mutations: {
@@ -68,7 +71,7 @@ const store = new Vuex.Store({
             state.question = res))
     },
     changeModal (state, answer) {
-      if (Boolean(answer) === Boolean(state.question.main.correct)) {
+      if (answer === String(Boolean(state.question.main.correct))) {
         state.result = true
       } else {
         state.result = false
@@ -119,6 +122,9 @@ const store = new Vuex.Store({
     },
     setAnswer (state, answer) {
       state.answer = answer
+    },
+    setNow (state, now) {
+      state.now = now
     }
   },
   actions: {
@@ -162,12 +168,16 @@ var select = Vue.component('app', {
   `
 })
 
-export default {
-  components: {
-    modal,
-    questionView
-  }
-}
+var top = Vue.component('app', {
+  store,
+  template: `
+    <div class="app">
+    <div class="max">
+    <div class="top">aaaaa</div>
+    </div>
+    </div>
+  `
+})
 
 Vue.component('modal', {
   template: '#modal-template'
@@ -179,17 +189,15 @@ Vue.component('questionView', {
 
 window.store = store
 
-const Bar = { template: '<div>bar</div>' }
-
 // 2. ルートをいくつか定義します
 // 各ルートは 1 つのコンポーネントとマッピングされる必要があります。
 // このコンポーネントは実際の Vue.extend()、
 // またはコンポーネントオプションのオブジェクトでも構いません。
 // ネストされたルートに関しては後で説明します
 const routes = [
+  { path: '/', component: top },
   { path: '/main', component: main },
-  { path: '/select', component: select },
-  { path: '/bar', component: Bar }
+  { path: '/select', component: select }
 ]
 
 // 3. ルーターインスタンスを作成して、ルートオプションを渡します
@@ -205,6 +213,14 @@ const router = new VueRouter({
 var app = new Vue({
   router
 }).$mount('#app')
+
+export default {
+  components: {
+    modal,
+    questionView,
+    router
+  }
+}
 
 window.app = app
 console.log(store.state.questionList.main)

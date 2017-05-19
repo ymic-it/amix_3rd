@@ -5,6 +5,7 @@
       <h3>回答</h3>
   </div>
 
+
             <div class="body">
               <div v-if="Boolean($store.getters.result)">
               <img class="img-responsive" src="/static/t-msg.png" />
@@ -54,6 +55,7 @@ export default{
     },
     getAnswer () {
       console.log(this.$store.state.answer)
+      console.log(this.$router)
       return this.$store.state.answer
     }
   }
@@ -97,4 +99,5 @@ font-size: 40px;
   vertical-align: middle;
   display: inline;
 }
+
 </style>
