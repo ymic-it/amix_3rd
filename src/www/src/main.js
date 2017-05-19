@@ -173,7 +173,7 @@ var top = Vue.component('app', {
   template: `
     <div class="app">
     <div class="max">
-    <div class="top">aaaaa</div>
+    <div class="top"></div>
     </div>
     </div>
   `
