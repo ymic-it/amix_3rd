@@ -16,10 +16,10 @@
 
               <div v-if="! Boolean($store.getters.result)" >
                 <div class="text-center" v-if="$store.getters.answer">
-                    <p>あなたの正答は<img class="one-line img-responsive-answer" src="/static/T.png" />でした</p>
+                    <p>あなたの答えは<img class="one-line img-responsive-answer" src="/static/T.png" />でした</p>
                 </div>
                 <div class="text-center" v-else>
-                  <p>あなたの正答は<img class="one-line img-responsive-answer" src="/static/F.png" />でした</P>
+                  <p>あなたの答えは<img class="one-line img-responsive-answer" src="/static/F.png" />でした</P>
                 </div>
             </div>
 
