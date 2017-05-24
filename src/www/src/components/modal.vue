@@ -15,7 +15,7 @@
               </div>
 
               <div v-if="! Boolean($store.getters.result)" >
-                <div class="text-center" v-if="$store.getters.answer">
+                <div class="text-center" v-if="'true'==$store.getters.answer">
                     <p>あなたの答えは<img class="one-line img-responsive-answer" src="/static/T.png" />でした</p>
                 </div>
                 <div class="text-center" v-else>
