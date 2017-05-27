@@ -21,7 +21,8 @@ const store = new Vuex.Store({
     sourceList: [],
     answer: false,
     now: 'index',
-    random: false
+    exam: false,
+    queueList: ['']
   },
   getters: {
     modalState: state => {
@@ -34,7 +35,6 @@ const store = new Vuex.Store({
       return state.result
     },
     questionSelect: state => {
-      console.log(state.questionSelect)
       if (state.questionSelect == null) {
         var array = {genre: [-1], source: [-1]}
         return array
@@ -56,38 +56,54 @@ const store = new Vuex.Store({
     questionStatus: state => {
       return state.questionStatus
     },
-    random: state => {
-      return state.random
+    exam: state => {
+      return state.exam
     }
   },
   mutations: {
     increment (state, payload) {
       var url = 'http://amix.api.ymic-it.com/question/rand/a?/b?'
-
-      var selectGenreOption = state.questionSelect.genre
-      var selectSourceOption = state.questionSelect.source
-      if (selectGenreOption == null || selectGenreOption === undefined) {
-        selectGenreOption = [0]
+      if (state.exam === false) {
+        var selectGenreOption = state.questionSelect.genre
+        var selectSourceOption = state.questionSelect.source
+        if (selectGenreOption == null || selectGenreOption === undefined) {
+          selectGenreOption = [0]
+        }
+        if (selectSourceOption == null || selectSourceOption === undefined) {
+          selectSourceOption = [0]
+        }
+        url = url.replace('a?', randAry(selectGenreOption))
+        url = url.replace('b?', randAry(selectSourceOption))
+        fetch(url, {mode: 'cors'})
+            .then(res => res.json()).then(function (res) {
+              if (res.status === '200') {
+                state.question = res
+              } else {
+                if (selectSourceOption.length === 1) {
+                  // 今後エラーコードが増えた際はここで分岐させる
+                  state.question = res
+                  state.question = `この回には○×問題がありません。過去問を自分で確認しよう！`
+                  return false
+                }
+                store.commit('increment')
+              }
+            })
+      } else {
+        url = 'http://amix.api.localhost/question/?'
+        var id = state.queueList.shift()
+        if (state.queueList.length > 0) {
+          url = url.replace('?', id)
+          console.log(url)
+          fetch(url, {mode: 'cors'})
+              .then(res => res.json()).then(function (res) {
+                state.question = res
+                console.log(state.question)
+              })
+        } else {
+          state.question = `すべての問題が終了しました`
+          return false
+        }
       }
-      if (selectSourceOption == null || selectSourceOption === undefined) {
-        selectSourceOption = [0]
-      }
-      url = url.replace('a?', randAry(selectGenreOption))
-      url = url.replace('b?', randAry(selectSourceOption))
-      console.log(url)
-      fetch(url, {mode: 'cors'})
-          .then(res => res.json()).then(function (res) {
-            console.log(JSON.stringify(res, null, '\t'))
-            if (res.status === '200') {
-              state.question = res
-            } else {
-              // 今後エラーコードが増えた際はここで分岐させる
-              state.question = res
-              state.question =
-              `この回には○×問題がありません。過去問を自分で確認しよう！
-              ErrorCord:` + res.status + ' ErrorMessage:' + res.error
-            }
-          })
     },
     changeModal (state, answer) {
       if (answer === String(Boolean(state.question.main.correct))) {
@@ -110,8 +126,8 @@ const store = new Vuex.Store({
       } else {
         state.questionSelect.genre = state.questionSelect.genre.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
-      console.log(state.questionSelect.genre)
       store.commit('increment')
+      store.commit('getQueueList')
     },
     selectSource (state, id) {
       if (state.questionSelect.source == null) {
@@ -122,8 +138,8 @@ const store = new Vuex.Store({
       } else {
         state.questionSelect.source = state.questionSelect.source.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
-      console.log(state.questionSelect.source)
       store.commit('increment')
+      store.commit('getQueueList')
     },
     getSource (state) {
       fetch('http://amix.api.ymic-it.com/source/list').then(res => res.json()).then(res => (
@@ -131,9 +147,9 @@ const store = new Vuex.Store({
     },
     allGenreSelect (state) {
       state.questionSelect.genre = ['1', '2', '3']
+      store.commit('getQueueList')
     },
     allSourceSelect (state) {
-      console.log(state.sourceList.main)
       state.questionSelect.source = state.sourceList.main
     },
     clearSelect (state) {
@@ -144,6 +160,42 @@ const store = new Vuex.Store({
     },
     setNow (state, now) {
       state.now = now
+    },
+    setExamMode (state, bool) {
+      state.exam = bool
+      console.log(state.exam)
+    },
+    getQueueList (state) {
+      // 模擬試験モードなら試験内容のリストを取得する
+      if (state.exam === true) {
+        var url = 'http://amix.api.ymic-it.com/question/list/a?/b?'
+        state.queueList = []
+
+        var selectGenreOption = state.questionSelect.genre
+        var selectSourceOption = state.questionSelect.source
+        if (selectGenreOption == null || selectGenreOption === undefined) {
+          selectGenreOption = [0]
+        }
+        if (selectSourceOption == null || selectSourceOption === undefined) {
+          selectSourceOption = [0]
+        }
+        selectGenreOption.forEach(function (genreVal, genreIndex, genreArray) {
+          selectSourceOption.forEach(function (sourceVal, souceIndex, sourceArray) {
+            url = 'http://amix.api.ymic-it.com/question/list/a?/b?'
+            url = url.replace('a?', genreVal)
+            url = url.replace('b?', sourceVal)
+            console.log(url)
+            fetch(url, {mode: 'cors'})
+                .then(res => res.json()).then(function (res) {
+                  res.main.forEach(function (value, index, array) {
+                    state.queueList[state.queueList.length] = value.id
+                  })
+                })
+          })
+        })
+      }
+
+      console.log(state.queueList)
     }
   },
   actions: {
@@ -155,13 +207,16 @@ const store = new Vuex.Store({
     },
     selectGenre (context) {
       context.commit('selectGenre')
+      context.commit('getQueueList')
     },
     selectSource (context) {
       context.commit('selectSource')
+      context.commit('getQueueList')
     },
     allSelect (context) {
       context.commit('allSourceSelect')
       context.commit('allGenreSelect')
+      context.commit('getQueueList')
     }
   }
 })
@@ -242,7 +297,6 @@ export default {
 }
 
 window.app = app
-console.log(store.state.questionList.main)
 function randAry (array) {
   var aryKeys = Object.keys(array)
   var index = aryKeys[Math.floor(Math.random() * aryKeys.length)]

@@ -52,13 +52,13 @@ def get_rand(genreId,sourceNo):
 # 問題を一つランダムに返す
 @app.route('/question/rand/')
 def get_all_rand():
-    returnDic = {"status": 200, "genreId":"all", "sourceNo":"all", "main": random.choice(db.getList())}
+    returnDic = {"status": "200", "genreId":"all", "sourceNo":"all", "main": random.choice(db.getList())}
     return str(json.dumps(returnDic))
 
 # 問題をジャンルリストを返す
 @app.route('/genre/list')
 def get_genre():
-    returnDic = {"status": 200, "main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
+    returnDic = {"status": "200", "main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -66,7 +66,7 @@ def get_genre():
 # 問題を出典元リストを返す
 @app.route('/source/list')
 def get_source():
-    returnDic = {"status": 200, "main":db.getSourceList()}
+    returnDic = {"status": "200", "main":db.getSourceList()}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -74,7 +74,7 @@ def get_source():
 # 指定されたIDの問題を返す
 @app.route('/question/<questionId>')
 def get_question(questionId):
-    returnDic = {"status": 200, "main":db.getQuestion( questionId )}
+    returnDic = {"status": "200", "main":db.getQuestion(questionId)[0]}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
