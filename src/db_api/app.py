@@ -24,7 +24,7 @@ def get_test():
 # 指定されたものの問題量を返す
 @app.route('/question/size/<genreId>/<sourceNo>')
 def get_size(genreId,sourceNo):
-    returnDic = {"status": 200, "genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
+    returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -32,7 +32,7 @@ def get_size(genreId,sourceNo):
 # 問題リストを返す
 @app.route('/question/list/<genreId>/<sourceNo>')
 def get_lists(genreId,sourceNo):
-    returnDic = {"status": 200, "genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
+    returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -42,9 +42,9 @@ def get_lists(genreId,sourceNo):
 def get_rand(genreId,sourceNo):
     list = db.getList(genreId, sourceNo)
     if(list != False):
-        returnDic = {"status": 200, "genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+        returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
     else:
-        returnDic = {"status": 505,"error": "Not found questions"}
+        returnDic = {"status": "505","error": "Not found questions"}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response

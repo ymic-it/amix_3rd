@@ -51,11 +51,15 @@ const store = new Vuex.Store({
     },
     getNow: state => {
       return state.now
+    },
+    questionStatus: state => {
+      return state.questionStatus
     }
   },
   mutations: {
     increment (state, payload) {
       var url = 'http://amix.api.ymic-it.com/question/rand/a?/b?'
+
       var selectGenreOption = state.questionSelect.genre
       var selectSourceOption = state.questionSelect.source
       if (selectGenreOption == null || selectGenreOption === undefined) {
@@ -66,9 +70,21 @@ const store = new Vuex.Store({
       }
       url = url.replace('a?', randAry(selectGenreOption))
       url = url.replace('b?', randAry(selectSourceOption))
-      fetch(url)
-          .then(res => res.json()).then(res => (
-            state.question = res))
+      console.log(url)
+      fetch(url, {mode: 'cors'})
+          .then(res => res.json()).then(function (res) {
+            console.log(JSON.stringify(res, null, '\t'))
+            if (res.status === '200') {
+              state.question = res
+            } else {
+              // 今後エラーコードが増えた際はここで分岐させる
+              state.question = res
+              state.question =
+              `問題が存在していません申し訳ありませんが戻って再選択してください  \
+              また、不具合の場合は運営にご連絡ください\
+              ErrorCord:` + res.status + ' ErrorMessage:' + res.error
+            }
+          })
     },
     changeModal (state, answer) {
       if (answer === String(Boolean(state.question.main.correct))) {
@@ -153,7 +169,7 @@ var main = Vue.component('app', {
   template: `
     <div class="app">
     <questionView></questionView>
-    <modal></modal>
+    <modal  v-if="$store.getters.question.status === '200'"></modal>
     </div>
   `
 })
