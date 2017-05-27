@@ -40,7 +40,11 @@ def get_lists(genreId,sourceNo):
 # 問題を一つランダムに返す
 @app.route('/question/rand/<genreId>/<sourceNo>')
 def get_rand(genreId,sourceNo):
-    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+    list = db.getList(genreId, sourceNo)
+    if(list != False):
+        returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+    else:
+        returnDic = {"error": "Not found questions"}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
