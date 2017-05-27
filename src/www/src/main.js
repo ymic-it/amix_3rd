@@ -104,6 +104,27 @@ const store = new Vuex.Store({
           return false
         }
       }
+
+      url = url.replace('a?', randAry(selectGenreOption))
+      url = url.replace('b?', randAry(selectSourceOption))
+      console.log(url)
+      fetch(url, {mode: 'cors'})
+          .then(res => res.json()).then(function (res) {
+            console.log(JSON.stringify(res, null, '\t'))
+            if (res.status === '200') {
+              state.question = res
+            } else {
+              if (selectSourceOption.length === 1) {
+                // 今後エラーコードが増えた際はここで分岐させる
+                state.question = res
+                state.question =
+                `この回には○×問題がありません。過去問を自分で確認しよう！
+                ErrorCord:` + res.status + ' ErrorMessage:' + res.error
+                return false
+              }
+              store.commit('increment')
+            }
+          })
     },
     changeModal (state, answer) {
       if (answer === String(Boolean(state.question.main.correct))) {
