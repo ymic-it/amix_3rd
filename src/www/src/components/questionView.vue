@@ -11,7 +11,6 @@
     </div>
   </div>
   <div v-else>
-  <h2>問題が見つかりませんでした</h2>
   <p class=text>
   {{ getQuestion }}
   </p>
