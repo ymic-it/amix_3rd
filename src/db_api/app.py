@@ -71,5 +71,13 @@ def get_source():
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
+# 指定されたIDの問題を返す
+@app.route('/question/<questionId>')
+def get_question(questionId):
+    returnDic = {"status": 200, "main":db.getQuestion( questionId )}
+    response = make_response(str(json.dumps(returnDic)))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
