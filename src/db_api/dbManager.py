@@ -84,3 +84,7 @@ def getSourceList():
         resultArray.append(row["sourceNo"])
 
     return  resultArray
+
+def getQuestion(questionId):
+    result = runQuery("SELECT * FROM question.questions Where id = " + questionId + " LIMIT 1")
+    return result
