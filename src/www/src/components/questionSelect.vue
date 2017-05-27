@@ -7,6 +7,11 @@
 <br>
   <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('allGenreSelect'), $store.commit('allSourceSelect')" > 全選択</button></div>
 <br>  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('clearSelect')" > 解除</button></div>
+<br>
+<label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect" >
+  <input type="checkbox" id="switch1" class="mdl-switch__input" v-model="$store.state.exam" >
+  <span class="mdl-switch__label">ランダム/順々</span>
+</label>
 </div>
 <div class="col-md-5">
 <h6>問題ジャンル選択</h6>
