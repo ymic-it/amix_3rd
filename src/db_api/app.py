@@ -24,7 +24,7 @@ def get_test():
 # 指定されたものの問題量を返す
 @app.route('/question/size/<genreId>/<sourceNo>')
 def get_size(genreId,sourceNo):
-    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
+    returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "count": str(db.getSize(genreId, sourceNo))}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -32,7 +32,7 @@ def get_size(genreId,sourceNo):
 # 問題リストを返す
 @app.route('/question/list/<genreId>/<sourceNo>')
 def get_lists(genreId,sourceNo):
-    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
+    returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "main": db.getList(genreId, sourceNo)}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -40,7 +40,11 @@ def get_lists(genreId,sourceNo):
 # 問題を一つランダムに返す
 @app.route('/question/rand/<genreId>/<sourceNo>')
 def get_rand(genreId,sourceNo):
-    returnDic = {"genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+    list = db.getList(genreId, sourceNo)
+    if(list != False):
+        returnDic = {"status": "200", "genreId":genreId, "sourceNo":sourceNo, "main": random.choice(db.getList(genreId, sourceNo))}
+    else:
+        returnDic = {"status": "505","error": "Not found questions"}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -48,13 +52,13 @@ def get_rand(genreId,sourceNo):
 # 問題を一つランダムに返す
 @app.route('/question/rand/')
 def get_all_rand():
-    returnDic = {"genreId":"all", "sourceNo":"all", "main": random.choice(db.getList())}
+    returnDic = {"status": 200, "genreId":"all", "sourceNo":"all", "main": random.choice(db.getList())}
     return str(json.dumps(returnDic))
 
 # 問題をジャンルリストを返す
 @app.route('/genre/list')
 def get_genre():
-    returnDic = {"main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
+    returnDic = {"status": 200, "main":{"1":"医療秘書実務", "2":"医療関連法規", "3": "医学的基礎知識"}}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
@@ -62,7 +66,7 @@ def get_genre():
 # 問題を出典元リストを返す
 @app.route('/source/list')
 def get_source():
-    returnDic = {"main":db.getSourceList()}
+    returnDic = {"status": 200, "main":db.getSourceList()}
     response = make_response(str(json.dumps(returnDic)))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response

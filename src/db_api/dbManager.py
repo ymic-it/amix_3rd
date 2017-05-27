@@ -4,17 +4,24 @@ import pymysql.cursors
 # MySQLに接続する
 def runQuery(sql):
     print(str(sql))
-    connect =  pymysql.connect(host='mysql',
-                             user='python',
-                             passwd='python',
-                             db='question',
-                             charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
-    connect =  connect.cursor()
-    connect.execute(sql)
-    result = connect.fetchall()
-    connect.close()
-    return result
+    try:
+        connect =  pymysql.connect(host='mysql',
+                                 user='python',
+                                 passwd='python',
+                                 db='question',
+                                 charset='utf8',
+                                 cursorclass=pymysql.cursors.DictCursor)
+        connect =  connect.cursor()
+        connect.execute(sql)
+        result = connect.fetchall()
+        rows = connect.rowcount
+        connect.close()
+        if(rows != 0):
+            return result
+        else:
+            return False
+    except Exception:
+       return False
 
 
 def getTest():
