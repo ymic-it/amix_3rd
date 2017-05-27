@@ -11,8 +11,8 @@
     </div>
   </div>
   <div v-else>
-  <h3>ERROR</h3>
-  <p>
+  <h2>問題が見つかりませんでした</h2>
+  <p class=text>
   {{ getQuestion }}
   </p>
   <div class="container bt-center">
@@ -35,3 +35,8 @@ export default{
   }
 }
 </script>
+<style>
+.text {
+  font-size: 1.9rem;
+}
+</style>

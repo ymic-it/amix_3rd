@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     isActive: false,
     sourceList: [],
     answer: false,
-    now: 'index'
+    now: 'index',
+    random: false
   },
   getters: {
     modalState: state => {
@@ -54,6 +55,9 @@ const store = new Vuex.Store({
     },
     questionStatus: state => {
       return state.questionStatus
+    },
+    random: state => {
+      return state.random
     }
   },
   mutations: {
@@ -80,8 +84,7 @@ const store = new Vuex.Store({
               // 今後エラーコードが増えた際はここで分岐させる
               state.question = res
               state.question =
-              `問題が存在していません申し訳ありませんが戻って再選択してください  \
-              また、不具合の場合は運営にご連絡ください\
+              `この回には○×問題がありません。過去問を自分で確認しよう！
               ErrorCord:` + res.status + ' ErrorMessage:' + res.error
             }
           })
