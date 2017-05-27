@@ -81,11 +81,15 @@ const store = new Vuex.Store({
             if (res.status === '200') {
               state.question = res
             } else {
-              // 今後エラーコードが増えた際はここで分岐させる
-              state.question = res
-              state.question =
-              `この回には○×問題がありません。過去問を自分で確認しよう！
-              ErrorCord:` + res.status + ' ErrorMessage:' + res.error
+              if (selectSourceOption.length === 1) {
+                // 今後エラーコードが増えた際はここで分岐させる
+                state.question = res
+                state.question =
+                `この回には○×問題がありません。過去問を自分で確認しよう！
+                ErrorCord:` + res.status + ' ErrorMessage:' + res.error
+                return false
+              }
+              store.commit('increment')
             }
           })
     },
