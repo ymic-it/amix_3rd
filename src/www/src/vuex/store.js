@@ -28,7 +28,7 @@ function getGIFs (query) {
 }
 
 function getQuestion () {
-  return fetch('http://db.localhost/question/rand/0/0')
+  return fetch('http://db.ymic-it.com/question/rand/0/0')
           .then(res => res.json())
 }
 

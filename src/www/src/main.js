@@ -89,7 +89,7 @@ const store = new Vuex.Store({
               }
             })
       } else {
-        url = 'http://amix.api.localhost/question/?'
+        url = 'http://amix.api.ymic-it.com/question/?'
         var id = state.queueList.shift()
         if (state.queueList.length > 0) {
           url = url.replace('?', id)
