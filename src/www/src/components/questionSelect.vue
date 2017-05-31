@@ -9,7 +9,7 @@
 <br>  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('clearSelect')" > 解除</button></div>
 <br>
 <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect" >
-  <input type="checkbox" id="switch1" class="mdl-switch__input" v-model="$store.state.exam"  @click="$store.commit('increment')">
+  <input type="checkbox" id="switch1" class="mdl-switch__input" v-model="$store.state.exam"  @click="$store.commit('getQueueList')">
   <span class="mdl-switch__label">ランダム/順々</span>
 </label>
 </div>
@@ -50,9 +50,9 @@
 </div>
 <br>
 <div class="container bt-center">
- <router-link class="mdl-navigation__link" to="/main">
+ <div class="mdl-navigation__link" @click="$store.commit('goQuestion')">
 <button class="bt-center mdl-button--raised mdl-button--colored mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" > 始める</button>
-</router-link>
+</div>
 <br><br><br>
 </div>
 

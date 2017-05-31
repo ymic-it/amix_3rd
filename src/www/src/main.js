@@ -91,6 +91,7 @@ const store = new Vuex.Store({
       } else {
         url = 'http://amix.api.ymic-it.com/question/?'
         var id = state.queueList.shift()
+        console.log(state.queueList.length)
         if (state.queueList.length > 0) {
           url = url.replace('?', id)
           console.log(url)
@@ -138,8 +139,8 @@ const store = new Vuex.Store({
       } else {
         state.questionSelect.source = state.questionSelect.source.filter(function (val) { return val !== id }).filter(function (val) { return val !== 0 })
       }
-      store.commit('increment')
       store.commit('getQueueList')
+      store.commit('increment')
     },
     getSource (state) {
       fetch('http://amix.api.ymic-it.com/source/list').then(res => res.json()).then(res => (
@@ -166,6 +167,7 @@ const store = new Vuex.Store({
       console.log(state.exam)
     },
     getQueueList (state) {
+      console.log('aaaaa')
       // 模擬試験モードなら試験内容のリストを取得する
       if (state.exam === true) {
         var url = 'http://amix.api.ymic-it.com/question/list/a?/b?'
@@ -194,8 +196,12 @@ const store = new Vuex.Store({
           })
         })
       }
-
+      store.commit('increment')
       console.log(state.queueList)
+    },
+    goQuestion (state) {
+      store.commit('increment')
+      setTimeout(getMain, 500)
     }
   },
   actions: {
@@ -301,6 +307,10 @@ function randAry (array) {
   var aryKeys = Object.keys(array)
   var index = aryKeys[Math.floor(Math.random() * aryKeys.length)]
   return array[index]
+}
+
+function getMain () {
+  router.push('main')
 }
 store.commit('getGenre')
 store.commit('getSource')
