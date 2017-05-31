@@ -5,11 +5,11 @@
 <br>
 <br>
 <br>
-  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('allGenreSelect'), $store.commit('allSourceSelect')" > 全選択</button></div>
+  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('allGenreSelect'), $store.commit('getQueueList')" > 全選択</button></div>
 <br>  <div><button class="select-bt cmdl-button--raised mdl-button mdl-js-button mdl-button--raised mdl-button--colored" @click="$store.commit('clearSelect')" > 解除</button></div>
 <br>
 <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect" >
-  <input type="checkbox" id="switch1" class="mdl-switch__input" v-model="$store.state.exam" >
+  <input type="checkbox" id="switch1" class="mdl-switch__input" v-model="$store.state.exam"  @click="$store.commit('increment')">
   <span class="mdl-switch__label">ランダム/順々</span>
 </label>
 </div>
