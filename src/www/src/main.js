@@ -90,9 +90,10 @@ const store = new Vuex.Store({
             })
       } else {
         url = 'http://amix.api.ymic-it.com/question/?'
-        var id = state.queueList.shift()
-        console.log(state.queueList.length)
+
         if (state.queueList.length > 0) {
+          var id = state.queueList.shift()
+          console.log(state.queueList.length)
           url = url.replace('?', id)
           console.log(url)
           fetch(url, {mode: 'cors'})
