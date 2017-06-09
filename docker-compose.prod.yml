@@ -1,0 +1,62 @@
+version: '2'
+services:
+  db_data:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+
+  db_api:
+      build: ./Docker/flask
+      # ports:
+      #  - "5000:5000"
+      volumes:
+       - ./src/db_api/:/code
+      depends_on:
+       - redis
+      expose:
+        - "80"
+      links:
+        - mysql
+      environment:
+        VIRTUAL_HOST: amix.api.*
+        VIRTUAL_PORT: 80
+
+  redis:
+    image: redis
+
+  mysql:
+    build: ./Docker/mysql
+    volumes_from:
+      - db_data
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: python
+      MYSQL_PASSWORD: python
+      MYSQL_DATABASE: question
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    # expose:
+    #   - "3306"
+    ports:
+      - "3306:3306"
+
+  node_express:
+    image: node:6.9-alpine
+    volumes:
+      - "./src/www/:/src"
+    working_dir: /src
+    command: [sh, -c, npm install && npm start dev]
+    expose:
+      - "80"
+    environment:
+      VIRTUAL_HOST: amix.app.*
+      VIRTUAL_PORT: 80
+
+  web:
+    image: httpd:2.4
+    environment:
+      VIRTUAL_HOST: www.*
+
+networks:
+  default:
+    external:
+      name: shared
